@@ -1,0 +1,282 @@
+﻿@model AdminWebFig.Models.Product
+@Styles.Render("~/Content/css")
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Product</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.idProduct)
+
+        <div class="form-group">
+            <div class="control-label col-md-2">Tên sản phẩm</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ten, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">Giá</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.gia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.gia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">Hình ảnh đại diện</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.hinh, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.hinh, "", new { @class = "text-danger" })
+                <input type="file" name="fileUpload" id="fileUpload" accept="image/*"
+                       style="display:none;" />
+                <input type="button" id="btnUpload" value="Chọn" class="btn btn-success " style="background-color:red; color:white" />
+            </div>
+        </div>
+
+        @section upload
+{
+            <script>
+                $(function () {
+                    $('#btnUpload').click(function () {
+                        $('#fileUpload').trigger('click');
+                    });
+                });
+                $('#fileUpload').change(function () {
+                    if (window.FormData !== undefined) {
+                        var fileUpload = $('#fileUpload').get(0);
+                        var files = fileUpload.files;
+                        var formData = new FormData();
+                        formData.append('file', files[0]);
+
+                        $.ajax(
+                            {
+                                type: 'POST',
+
+                                url: '/AdminHome/ProcessUpload',
+                                contentType: false,
+                                processData: false,
+                                data: formData,
+                                success: function (urlImage) {
+
+                                    $('#pictureUpload').attr('src', urlImage);
+                                    $('#hinh').val(urlImage);
+                                },
+
+                                error: function (err) {
+                                    alert('Error ', err.statusText);
+                                }
+                            });
+                    }
+                });
+            </script>
+        }
+
+        <div class="form-group">
+            <div class="control-label col-md-2">Mô tả sản phẩm</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mota, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mota, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">số lượng tồn</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.soluongton, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.soluongton, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">Hãng</div>
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.idNSX, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.idNSX, "", new { @class = "text-danger" })*@
+                @Html.DropDownList("idNSX", ViewBag.NSX as SelectList, new { @class = "modal-input" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">Loại sản phẩm</div>
+            <div class="col-md-10">
+                @* @Html.EditorFor(model => model.idCategory, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.idCategory, "", new { @class = "text-danger" })*@
+                @Html.DropDownList("idCategory", ViewBag.loai as SelectList, new { @class = "modal-input" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="control-label col-md-2">Hình chi tiết 1:</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.hinhDetail1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.hinhDetail1, "", new { @class = "text-danger" })
+                <input type="file" name="fileUpload1" id="fileUpload1" accept="image/*"
+                       style="display:none;" />
+                <input type="button" id="btnUpload1" value="Chọn" class="btn btn-success " style="background-color:red; color:white" />
+            </div>
+        </div>
+        @section upload1
+{
+            <script>
+                $(function () {
+                    $('#btnUpload1').click(function () {
+                        $('#fileUpload1').trigger('click');
+                    });
+                });
+                $('#fileUpload1').change(function () {
+                    if (window.FormData !== undefined) {
+                        var fileUpload1 = $('#fileUpload1').get(0);
+                        var files = fileUpload1.files;
+                        var formData1 = new FormData();
+                        formData1.append('file', files[0]);
+
+                        $.ajax(
+                            {
+                                type: 'POST',
+
+                                url: '/AdminHome/ProcessUpload',
+                                contentType: false,
+                                processData: false,
+                                data: formData1,
+                                success: function (urlImage) {
+
+                                    $('#pictureUpload1').attr('src', urlImage);
+                                    $('#hinhDetail1').val(urlImage);
+                                },
+
+                                error: function (err) {
+                                    alert('Error ', err.statusText);
+                                }
+                            });
+                    }
+                });
+            </script>
+        }
+        <div class="form-group">
+            <div class="control-label col-md-2">Hình chi tiết 2:</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.hinhDetail2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.hinhDetail2, "", new { @class = "text-danger" })
+                <input type="file" name="fileUpload2" id="fileUpload2" accept="image/*"
+                       style="display:none;" />
+                <input type="button" id="btnUpload2" value="Chọn" class="btn btn-success " style="background-color:red; color:white" />
+
+            </div>
+        </div>
+        @section upload2
+{
+            <script>
+                $(function () {
+                    $('#btnUpload2').click(function () {
+                        $('#fileUpload2').trigger('click');
+                    });
+                });
+                $('#fileUpload2').change(function () {
+                    if (window.FormData !== undefined) {
+                        var fileUpload = $('#fileUpload2').get(0);
+                        var files = fileUpload.files;
+                        var formData = new FormData();
+                        formData.append('file', files[0]);
+
+                        $.ajax(
+                            {
+                                type: 'POST',
+
+                                url: '/AdminHome/ProcessUpload',
+                                contentType: false,
+                                processData: false,
+                                data: formData,
+                                success: function (urlImage) {
+
+                                    $('#pictureUpload2').attr('src', urlImage);
+                                    $('#hinhDetail2').val(urlImage);
+                                },
+
+                                error: function (err) {
+                                    alert('Error ', err.statusText);
+                                }
+                            });
+                    }
+                });
+            </script>
+        }
+        <div class="form-group">
+            <div class="control-label col-md-2">Hình chi tiết 3:</div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.hinhDetail3, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.hinhDetail3, "", new { @class = "text-danger" })
+                <input type="file" name="fileUpload3" id="fileUpload3" accept="image/*"
+                       style="display:none;" />
+                <input type="button" id="btnUpload3" value="Chọn" class="btn btn-success " style="background-color:red; color:white" />
+            </div>
+        </div>
+
+        @section upload3
+{
+            <script>
+                $(function () {
+                    $('#btnUpload3').click(function () {
+                        $('#fileUpload3').trigger('click');
+                    });
+                });
+                $('#fileUpload3').change(function () {
+                    if (window.FormData !== undefined) {
+                        var fileUpload = $('#fileUpload3').get(0);
+                        var files = fileUpload.files;
+                        var formData = new FormData();
+                        formData.append('file', files[0]);
+
+                        $.ajax(
+                            {
+                                type: 'POST',
+
+                                url: '/AdminHome/ProcessUpload',
+                                contentType: false,
+                                processData: false,
+                                data: formData,
+                                success: function (urlImage) {
+
+                                    $('#pictureUpload3').attr('src', urlImage);
+                                    $('#hinhDetail3').val(urlImage);
+                                },
+
+                                error: function (err) {
+                                    alert('Error ', err.statusText);
+                                }
+                            });
+                    }
+                });
+            </script>
+        }
+        <div class="form-group">
+            <div class="control-label col-md-2">Tỉ lệ:</div>
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.idSize, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.idSize, "", new { @class = "text-danger" })*@
+                @Html.DropDownList("idSize", ViewBag.size as SelectList, new { @class = "modal-input" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<AdminWebFig.Models.Order>
+@Styles.Render("~/Content/css")
+@{
+    ViewBag.Title = "DSDonHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DSDonHang</h2>
+
+<table style="margin-top:200px" class="table">
+    <tr>
+        <th>
+            Tên khách hàng
+        </th>
+        <th>
+            Phương thức vận chuyển
+        </th>
+        <th>
+            Phương thức thanh toán
+        </th>
+        <th>
+           Tình trạng đơn hàng
+        </th>
+        <th>
+            Ngày đặt
+        </th>
+        <th>
+            Ấn để xác nhận
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.Hoten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Delivery.tenDelivery)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Payment.tenPayment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.NameStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDat)
+            </td>
+            <td>
+                @if (item.Status.IdStatus == 0)
+                {
+                    using (Html.BeginForm("XacNhanDonHang", "AdminHome", new { id = item.IdOrder }))
+                    {
+                        <button type="submit">Xác nhận đơn hàng</button>
+                    }
+                }
+                else if (item.Status.IdStatus == 1)
+                {
+
+                    using (Html.BeginForm("GiaoHang", "AdminHome", new { id = item.IdOrder }))
+                    {
+                        <button type="submit">Giao Hàng</button>
+                    }
+                }
+            </td>
+
+            <td>
+                <div class="Detail">
+                    <a class="btn btn-success" href="@Url.Action("ChiTietDonHang","AdminHome", new {@id = item.IdOrder})">Chi tiết</a>
+                </div>
+            </td>
+
+        </tr>
+    }
+
+</table>

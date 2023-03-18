@@ -1,0 +1,60 @@
+﻿@model IEnumerable<AdminWebFig.Models.OrderDetail>
+@Styles.Render("~/Content/css")
+@{
+    ViewBag.Title = "ChiTietDonHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ChiTietDonHang</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table style="margin-top:200px" class="table">
+    <tr>
+        <th>
+            Mã đơn hàng
+        </th>
+        <th>
+            Tên
+        </th>
+        <th>
+            Hình
+        </th>
+        <th>
+            Số lượng
+        </th>
+        <th>
+            Giá
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.IdOrder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ten)
+            </td>
+            <td>
+                <img width="100px" src="@Html.DisplayFor(modelItem => item.Product.hinh)" />
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>*@
+        </tr>
+    }
+
+</table>

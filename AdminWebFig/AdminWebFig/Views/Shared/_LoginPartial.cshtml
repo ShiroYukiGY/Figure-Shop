@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNet.Identity
+@Styles.Render("~/Content/style.css")
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a class="check-in" href="@Html.ActionLink("Xin chào " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" }) </a>
+            </li>
+            <li><a class="check-in" href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+@*        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+*@        <li>
+            <div class="check-in">
+                @Html.ActionLink("Đăng nhập", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </div>
+         
+        </li>
+    </ul>
+}

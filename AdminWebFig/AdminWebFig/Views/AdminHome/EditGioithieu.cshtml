@@ -1,0 +1,294 @@
+﻿@model AdminWebFig.Models.Gioithieu
+
+@{
+    ViewBag.Title = "EditGioithieu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/introduce.css")
+@Styles.Render("~/Content/css")
+<script src="~/Content/plugin/ckfinder/ckfinder.js"></script>
+<script src="~/Content/plugin/ckeditor/ckeditor.js"></script>
+@*@Scripts.Render("~/ Content / ckeditor5 - build - classic / ckeditor.js")*@
+@using (Html.BeginForm())
+
+{
+    @Html.AntiForgeryToken()
+    <div class="introduce">
+        <div class="introduce-header">
+            <div class="container">
+                <div class="row">
+                    <div class="introduce-item col-lg-6">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.idBaiviet)
+                        <h1 class="introduce-heading">
+                            @Html.EditorFor(model => model.Topic1, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Topic1, "", new { @class = "text-danger" })
+                        </h1>
+                        <div class="introduce-description">
+                            <textarea name="Para" id="para" class="form-control">@Model.Para</textarea>
+                            @Html.ValidationMessageFor(model => model.Para, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="introduce-item col-lg-6">
+                        <img class="introduce-img-header" src="https://ae01.alicdn.com/kf/Hfdcbecba8d1a4009a1a13e42d7915991A/Demon-Slayer-Daki-And-Giyuutarou-GK-Resin-Limited-Statue-Figure.jpg_Q90.jpg_.webp" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="introduce-category">
+            <div class="container">
+                <div class="row">
+                    <h1 class="introduce-heading">
+                        @Html.TextAreaFor(model => model.Topic2, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Topic2, "", new { @class = "text-danger" })
+                    </h1>
+                    <div class="introduce-item col-lg-6">
+                        <h2 class="introduce-name">
+                            @Html.TextAreaFor(model => model.Topic3, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Topic3, "", new { @class = "text-danger" })
+                        </h2>
+                        <div class="introduce-description">
+                            <textarea name="Para2" id="para2" class="form-control">@Model.Para2</textarea>
+                            @Html.ValidationMessageFor(model => model.Para2, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="introduce-item col-lg-6">
+                        <h2 class="introduce-name">
+                            @Html.TextAreaFor(model => model.Topic4, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Topic4, "", new { @class = "text-danger" })
+                        </h2>
+                        <div class="introduce-description">
+                            <textarea name="Para3" id="para3" class="form-control">@Model.Para3</textarea>
+                            @Html.ValidationMessageFor(model => model.Para3, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="introduce-item col-lg-6">
+                        <h2 class="introduce-name">
+                            @Html.EditorFor(model => model.Topic5, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Topic5, "", new { @class = "text-danger" })
+                        </h2>
+                        <div class="introduce-description">
+                            <textarea name="Para4" id="para8" class="form-control">@Model.Para4</textarea>
+                            @Html.ValidationMessageFor(model => model.Para4, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="introduce-item col-lg-6">
+                        <h2 class="introduce-name">
+                            @Html.EditorFor(model => model.Topic6, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Topic6, "", new { @class = "text-danger" })
+                        </h2>
+                        <div class="introduce-description">
+                            <textarea name="Para5" id="para5" class="form-control">@Model.Para5</textarea>
+                            @Html.ValidationMessageFor(model => model.Para5, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="introduce-detail">
+            <div class="container">
+                <div class="introduce-item">
+                    <h1 class="introduce-heading">
+                        @Html.TextAreaFor(model => model.Topic7, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Topic7, "", new { @class = "text-danger" })
+                    </h1>
+                    <div class="introduce-description">
+                        <textarea name="Para6" id="para6" class="form-control">@Model.Para6</textarea>
+                        @Html.ValidationMessageFor(model => model.Para6, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="introduce-footer">
+            <div class="container">
+                <div class="row">
+                    <h1 class="introduce-heading">
+                        @Html.TextAreaFor(model => model.Topic8, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Topic8, "", new { @class = "text-danger" })
+                    </h1>
+                    <div class="introduce-item">
+                        <h2 class="introduce-name">
+                            @Html.TextAreaFor(model => model.Topic9, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Topic9, "", new { @class = "text-danger" })
+                        </h2>
+                        <div class="introduce-description">
+                            <textarea name="Para7" id="para7" class="form-control">@Model.Para7</textarea>
+                            @Html.ValidationMessageFor(model => model.Para7, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="introduce-item">
+                            <h2 class="introduce-name">
+                                @Html.TextAreaFor(model => model.Topic10, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Topic10, "", new { @class = "text-danger" })
+                            </h2>
+                            <div class="introduce-description">
+                                @Html.TextAreaFor(model => model.Para8, new { htmlAttributes = new { @class = "form-control" } })
+                                @*  <textarea name="Para8" id="para8" class="form-control">@Model.Para8</textarea>*@
+
+                                @Html.ValidationMessageFor(model => model.Para8, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+    @section scripts1{
+        <script>
+             CKEDITOR.replace("Para")
+
+
+
+            // Define changes to default configuration here. For example:
+            CKEDITOR.config.language = 'vi';
+            // config.uiColor = '#AADC6E';
+            CKEDITOR.config.htmlEncodeOutput = false;
+            CKEDITOR.config.entities = false;
+            CKEDITOR.config.entities_latin = false;
+            CKEDITOR.config.ForceSimpleAmpersand = true;
+            CKEDITOR.config.pasteFromWordPromptCleanup = true;
+            CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+            CKEDITOR.config.pasteFromWordRemoveStyles = false;
+
+        </script>
+
+    }
+
+    @section scripts2{
+        <script>
+            CKEDITOR.replace("Para2")
+            // Define changes to default configuration here. For example:
+            CKEDITOR.config.language = 'vi';
+            // config.uiColor = '#AADC6E';
+            CKEDITOR.config.htmlEncodeOutput = false;
+            CKEDITOR.config.entities = false;
+            CKEDITOR.config.entities_latin = false;
+            CKEDITOR.config.ForceSimpleAmpersand = true;
+            CKEDITOR.config.pasteFromWordPromptCleanup = true;
+            CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+            CKEDITOR.config.pasteFromWordRemoveStyles = false;
+        </script>
+
+    }
+
+    @section scripts3{
+        <script>
+            CKEDITOR.replace("Para3")
+            // Define changes to default configuration here. For example:
+            config.language = 'vi';
+            // config.uiColor = '#AADC6E';
+            CKEDITOR.config.htmlEncodeOutput = false;
+            CKEDITOR.config.entities = false;
+            CKEDITOR.config.entities_latin = false;
+            CKEDITOR.config.ForceSimpleAmpersand = true;
+            CKEDITOR.config.pasteFromWordPromptCleanup = true;
+            CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+            CKEDITOR.config.pasteFromWordRemoveStyles = false;
+        </script>
+
+    }
+
+    @section scripts4{
+        <script>
+            CKEDITOR.replace("Para4")
+            // Define changes to default configuration here. For example:
+            CKEDITOR.config.language = 'vi';
+            // config.uiColor = '#AADC6E';
+            CKEDITOR.config.htmlEncodeOutput = false;
+            CKEDITOR.config.entities = false;
+            CKEDITOR.config.entities_latin = false;
+            CKEDITOR.config.ForceSimpleAmpersand = true;
+            CKEDITOR.config.pasteFromWordPromptCleanup = true;
+            CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+            CKEDITOR.config.pasteFromWordRemoveStyles = false;
+        </script>
+
+    }
+
+
+    @section scripts5{
+        <script>
+            CKEDITOR.replace("Para5")
+            // Define changes to default configuration here. For example:
+            config.language = 'vi';
+            // config.uiColor = '#AADC6E';
+            config.htmlEncodeOutput = false;
+            config.entities = false;
+            config.entities_latin = false;
+            config.ForceSimpleAmpersand = true;
+            CKEDITOR.config.pasteFromWordPromptCleanup = true;
+            CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+            CKEDITOR.config.pasteFromWordRemoveStyles = false;
+        </script>
+
+    }
+
+
+
+    @section scripts6{
+        <script>
+            CKEDITOR.replace("Para6")
+            // Define changes to default configuration here. For example:
+            CKEDITOR.config.language = 'vi';
+            // config.uiColor = '#AADC6E';
+            CKEDITOR.config.htmlEncodeOutput = false;
+            CKEDITOR.config.entities = false;
+            CKEDITOR.config.entities_latin = false;
+            CKEDITOR.config.ForceSimpleAmpersand = true;
+            CKEDITOR.config.pasteFromWordPromptCleanup = true;
+            CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+            CKEDITOR.config.pasteFromWordRemoveStyles = false;
+        </script>
+
+    }
+
+    @section scripts7{
+        <script>
+            CKEDITOR.replace("Para7")
+            // Define changes to default configuration here. For example:
+            CKEDITOR.config.language = 'vi';
+            // config.uiColor = '#AADC6E';
+            CKEDITOR.config.htmlEncodeOutput = false;
+            CKEDITOR.config.entities = false;
+            CKEDITOR.config.entities_latin = false;
+            CKEDITOR.config.ForceSimpleAmpersand = true;
+            CKEDITOR.config.pasteFromWordPromptCleanup = true;
+            CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+            CKEDITOR.config.pasteFromWordRemoveStyles = false;
+        </script>
+
+    }
+
+    @section scripts8{
+        <script>
+            CKEDITOR.replace("Para8")
+            // Define changes to default configuration here. For example:
+            CKEDITOR.config.language = 'vi';
+            // config.uiColor = '#AADC6E';
+            CKEDITOR.config.htmlEncodeOutput = false;
+            CKEDITOR.config.entities = false;
+            CKEDITOR.config.entities_latin = false;
+            CKEDITOR.config.ForceSimpleAmpersand = true;
+            CKEDITOR.config.pasteFromWordPromptCleanup = true;
+            CKEDITOR.config.pasteFromWordRemoveFontStyles = false;
+            CKEDITOR.config.pasteFromWordRemoveStyles = false;
+        </script>
+
+    }
+
+
+
+
+
+
+}
+<div>
+    @Html.ActionLink("Back to List", "Gioithieu")
+</div>

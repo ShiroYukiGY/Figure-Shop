@@ -1,0 +1,128 @@
+﻿@model IEnumerable<WebFig.Models.Cart>
+@using WebFig.Models
+@Styles.Render("~/Content/css")
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="slider">
+    <div class="container">
+        <div id="carouselExampleDark" class="carousel carousel-light slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/Content/img/slide__1.jpg" class="d-block w-100">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1 class="carousel-header">First slide label</h1>
+                        <h4 class="carousel-description">Some representative placeholder content for the first slide.</h4>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="~/Content/img/slide__3.jpg" class="d-block w-100">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1 class="carousel-header">Second slide label</h1>
+                        <h4 class="carousel-description">Some representative placeholder content for the second slide.</h4>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://www.mypage.vn/wp-content/themes/mypage/images/web-doanh-nghiep.png" class="d-block w-100">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1 class="carousel-header">Third slide label</h1>
+                        <h4 class="carousel-description">Some representative placeholder content for the third slide.</h4>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</div>
+@if (Session["GiohangAccount"] != null)
+{
+    <div class="container ">
+        <h2>Giỏ Hàng</h2>
+
+        <table class="table">
+            <tr>
+                <th>
+                    Tên
+                </th>
+                <th>
+                    Hình
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Số lượng
+                </th>
+                <th>
+                    Thành tiền
+                </th>
+                <th></th>
+            </tr>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.ten)
+                    </td>
+                    <td><img src="@item.Product.hinh" width="180" alt="Alternate Text" /></td>
+                    @using (Html.BeginForm("Capnhatgiohang", "GioHang", new { @id = item.idProduct }))
+                    {
+                        <td>@String.Format("{0:0,0}", item.gia) VND</td>
+                        <td><input type="number" min="1" max="@(item.Product.soluongton)" name="txtSoLg" value="@item.soluong" /></td>
+
+
+
+                        <td>@(item.soluong * item.gia)</td>
+                        <td><a href="@Url.Action("Detail", "UserHome", new { @id = item.idProduct })">Chi tiết</a> | @Html.ActionLink("Xóa", "XoaGiohang", new { @id = item.idProduct })</td>
+                        <td><input type="submit" value="Cập nhật" class="btn btn-success" id="num" /></td>
+
+                    }
+                </tr>
+            }
+
+            <tr style="font-weight:bold; text-align:left; color:red">
+                <td colspan="2">Số loại sản phẩm: @ViewBag.Tongsoluongsanpham</td>
+                <td colspan="2">Số lượng sản phẩm: @ViewBag.Tongsoluong</td>
+                <td colspan="4">Tổng tiền: @String.Format("{0:0,0}", ViewBag.Tongtien) VND</td>
+            </tr>
+
+            <tr style="font-weight:bold; color:white; text-align:right;">
+                <td colspan="6">
+                    <button class="btn btn-success">@Html.ActionLink("Xóa giỏ hàng", "XoaTatCaGioHang", new { @style = "text-decoration:none; color:white" })</button>
+                </td>
+            </tr>
+            <tr style="font-weight:bold; color:white; text-align:right">
+            <tr style="font-weight:bold; color:white; text-align:right">
+                <td colspan="6">
+                    <button class="btn btn-success">@Html.ActionLink("Đặt hàng", "DatHang", "GioHang", new { @style = "text-decoration:none; color:white" })</button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+}
+else
+{
+    <div class="container">
+        <h1>
+            @ViewBag.ThongBao1
+        </h1>
+    </div>
+}

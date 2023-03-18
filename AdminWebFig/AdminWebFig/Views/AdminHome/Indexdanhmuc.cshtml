@@ -1,0 +1,122 @@
+﻿@model IEnumerable<AdminWebFig.Models.Category>
+@{
+    ViewBag.Title = "Indexdanhmuc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/brand_admin.css")
+
+@*@Styles.Render("~/Content/brand_admin")*@
+
+@*<p>@Html.ActionLink("Thêm NSX mới", "CreateNSX")</p>*@
+
+
+@if (@ViewBag.thongbao2 != null)
+{
+    <script>
+        alert("Không được xoá danh mục này vì còn sản phẩm thuộc danh mục này")
+    </script>
+}
+<div class="brand">
+    <div class="container">
+        <div class="brand-heading">
+            <div class="container">
+                <table class="table">
+                    <thead class="table-info">
+                        <tr>
+                            
+                            <th class="brand-item-heading">Tên</th>
+                            <th class="brand-item-heading">Hình</th>
+                            <th class="brand-item-heading">Mô tả</th>
+                            <th class="brand-item-heading">Chỉnh sửa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+
+                        {
+                            <tr>
+                                
+                                <td>@item.tenCategory</td>
+                                <td>
+                                    <img width="120px" src="@item.hinhCategory" alt="">
+                                </td>
+                                <td>@item.motaCategory</td>
+                                <td>
+                                   @* <a href="@Url.Action("Deletedanhmuc","AdminHome",new { id  = item.idCategory})" class="btn brand-button-item brand-delete">Xoá</a>*@
+                                    <a href="@Url.Action("Editdanhmuc","AdminHome",new { id  = item.idCategory})" class="btn brand-button-item brand-edit"> Chỉnh sửa</a>
+                                </td>
+                            </tr>
+                        }
+
+
+
+                    </tbody>
+                </table>
+                <a href="@Url.Action("Createdanhmuc","AdminHome")" class="btn brand-button-item brand-create">Tạo mới</a>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+<script src="./detail.js"></script>
+</body>
+
+</html>
+<style>
+    .home-product-item__img {
+        padding-top: 100%;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        /* Ảnh zoom chậm lại */
+        transition: 0.4s;
+        will-change: transition;
+        margin-top: 40px
+    }
+
+    .btn-view-all {
+        width: 156px;
+        height: 38px;
+        font-weight: 500;
+        font-size: 1.6rem;
+        line-height: 32px;
+        color: #7d7d7d;
+        border: 2px solid #7d7d7d;
+        background-color: var(--white-color);
+        transition: 0.2s;
+    }
+
+    .footer {
+        background-color: #171717;
+    }
+
+    .check-in {
+        color: #fff;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    .btn {
+        margin-bottom: 12px;
+    }
+
+    .brand-create {
+        float: right;
+        margin-right: 52px;
+    }
+
+    .brand {
+        margin-top: 120px;
+    }
+
+    .nav > li > a {
+        padding: 0;
+    }
+</style>
+
+
+

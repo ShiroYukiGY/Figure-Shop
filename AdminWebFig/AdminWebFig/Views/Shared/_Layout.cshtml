@@ -1,0 +1,388 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Link reset css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Link css -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="grid.css">
+    <!-- Link icon -->
+    <link rel="stylesheet" href="~/Content/fonts/fontawesome-free-6.0.0-web/css/all.css" />
+    @Styles.Render("~/Content/style.css")
+    @Styles.Render("~/Content/base.css")
+    @Styles.Render("~/Content/menu.css")
+    @Styles.Render("~/Content/responsive.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="container">
+                <!-- Header Navigation -->
+                <nav class="header__navbar">
+                    <ul class="header__navbar-list">
+                        <li class="header__navbar-item">
+                            <label for="nav-mobile-input" class="header-menu">
+                                <i class="header-menu-icon fa-solid fa-bars"></i>
+                            </label>
+                            <input type="checkbox" class="nav__input" id="nav-mobile-input">
+                            <div class="nav__overlay"></div>
+                            <label for="nav-mobile-input" class="nav__overlay"></label>
+
+                            <!-- Menu -->
+                            <nav class="menu">
+                                <div class="nav__header">
+                                    <div class="nav__header-item">
+                                        <a href="" class="nav__mobile-item-link">
+                                            <img src="~/Content/img/logo.png" alt="logo" class="nav__mobile-logo">
+                                        </a>
+                                    </div>
+                                    <label for="nav-mobile-input" class="nav__header-item">
+                                        <i class="nav__header-icon fa-solid fa-xmark"></i>
+                                    </label>
+                                </div>
+                                <div class="nav__mobile-list">
+                        <li class="nav__mobile-item">
+                            <i class="nav__mobile-icon fa-solid fa-arrow-right-to-bracket"></i>
+                            <a href="" class="nav__mobile-item-link">
+                                Đăng nhập
+                            </a>
+                        </li>
+                        <li class="nav__mobile-item">
+                            <i class="nav__mobile-icon fa-brands fa-opencart"></i>
+                            <a href="" class="nav__mobile-item-link">
+                                Giỏ hàng
+                            </a>
+                        </li>
+                        <li class="nav__mobile-item">
+                            <i class="nav__mobile-icon fa-solid fa-bars-staggered"></i>
+                            <a href="@Url.Action("Indexdanhmuc")" class="nav__mobile-item-link">
+                                Danh mục
+                            </a>
+                            @*<i class="nav__mobile-icon nav__mobile-icon-down fa-solid fa-chevron-down"></i>*@
+                        </li>
+                        <li class="nav__mobile-item">
+                            <i class="nav__mobile-icon fa-solid fa-circle-info"></i>
+                            <a href="@Url.Action("IndexNSX")" class="nav__mobile-item-link">
+                                Hãng
+                            </a>
+                        </li>
+                        <li class="nav__mobile-item">
+                            <i class="nav__mobile-icon fa-solid fa-circle-info"></i>
+                            <a href="@Url.Action("Gioithieu", "GioiThieuAdmin")" class="nav__mobile-item-link">
+                                Giới thiệu
+                            </a>
+                        </li>
+                        <li class="nav__mobile-item">
+                            <i class="nav__mobile-icon fa-solid fa-bullhorn"></i>
+                            <a href="" class="nav__mobile-item-link">
+                                Tin tức
+                            </a>
+                        </li>
+                        <div class="nav--seperate"></div>
+                        <li class="nav__mobile-item">
+                            <i class="nav__mobile-icon fa-solid fa-arrow-right-from-bracket"></i>
+                            <a href="" class="nav__mobile-item-link">
+                                Đăng xuất
+                            </a>
+                        </li>
+            </div>
+            </nav>
+
+            @Html.Partial("_LoginPartial")
+           @* <a href="#my-modal" class="header__navbar-login hide-on-mobile-ipad">
+                @Html.Partial("_LoginPartial")
+            </a>*@
+            </li>
+
+            <li class="header__navbar-item">
+                <a href="/" class="header__navbar-logo-link">
+                    <div class="header__navbar-logo-img" style="background-image: url(/Content/img/logo.png);"></div>
+                </a>
+            </li>
+
+            <li class="header__navbar-item">
+                <div class="header__navbar-wrap">
+                    <div class="header__navbar-search">
+                        <i class="header__navbar-icon-search fas fa-search"></i>
+                        <div class="header__search-input-wrap">
+                            <input type="text" class="header__search-input" placeholder="Tìm kiếm...">
+                            <i class="header__search-input-icon fas fa-search"></i>
+                        </div>
+                    </div>
+                
+                    <div class="check-in">
+                        @Html.ActionLink("Quản lí đơn hàng", "DSDonHang", "AdminHome")
+                    </div>
+                
+
+                </div>
+            </li>
+            </ul>
+            </nav>
+</div>
+    <!-- Header Sub -->
+    <div class="header__sub">
+        <div class="header__sub-wrap hide-on-mobile">
+            <ul class="header__sub-list">
+                <li class="header__sub-item">
+                    <a href="@Url.Action("Index")" class="header__sub-item-link">Trang chủ</a>
+                </li>
+                <li class="header__sub-item">
+                    <a href="@Url.Action("Indexdanhmuc" )" class="header__sub-item-link">
+                        Danh mục
+
+                    </a>
+
+                </li>
+                <li class="header__sub-item">
+                    <a href="@Url.Action("IndexNSX")" class="header__sub-item-link">
+                        Hãng
+                        @*<i class="header__sub-item-icon fas fa-chevron-down"></i>*@
+                    </a>
+                    @*<ul class="header__sub-description-list">
+                            <li class="header__sub-description-item">
+                                <a class="header__sub-description-item-link" href="">Về Figure</a>
+                            </li>
+                            <li class="header__sub-description-item">
+                                <a class="header__sub-description-item-link" href="">Về Figma</a>
+                            </li>
+                            <li class="header__sub-description-item">
+                                <a class="header__sub-description-item-link" href="">Về Scale</a>
+                            </li>
+                            <li class="header__sub-description-item">
+                                <a class="header__sub-description-item-link" href="">Về Game prize</a>
+                            </li>
+                        </ul>*@
+                </li>
+                <li class="header__sub-item">
+                    <a href="@Url.Action("Gioithieu", "AdminHome")" class="header__sub-item-link">
+                        Giới thiệu
+                    </a>
+                </li>
+
+                <li class="header__sub-item">
+                    <a href="" class="header__sub-item-link">Tin tức</a>
+                </li>
+                <li class="header__sub-item">
+                    <a href="" class="header__sub-item-link">Liên hệ</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </header>
+
+    
+
+
+    @RenderBody()
+
+
+<footer class="footer">
+    <div class="footer__bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col l-3">
+                    <h1 class="footer-heading">Giới Thiệu</h1>
+                    <ul class="footer-list">
+                        <li class="footer-item">
+                            <p class="footer-item__description">Chào mừng bạn đến với ngôi nhà Converse! Tại đây, mỗi một dòng chữ, mỗi chi tiết và hình ảnh đều là những bằng chứng mang dấu ấn lịch sử Converse 100 năm, và đang không ngừng phát triển lớn mạnh.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col l-3">
+                    <h1 class="footer-heading">Địa Chỉ</h1>
+                    <ul class="footer-list">
+                        <li class="footer-item">
+                            <div class="footer-item__location">
+                                <i class="footer-icon fas fa-map-marked-alt"></i>80/66/49 Dương Quảng Hàm, Phường 5, Quận Gò Vấp, Tp.HCM
+                            </div>
+                        </li>
+                        <li class="footer-item">
+                            <a href="tel:+0971521472" class="footer-item__link">
+                                <i class="footer-icon fas fa-phone-alt"></i>0971 521 472
+                            </a>
+                        </li>
+                        <li class="footer-item">
+                            <a href="mailto:khaiduchoa@gmail.com" class="footer-item__link">
+                                <i class="footer-icon fas fa-envelope"></i>khaiduchoa@gmail.com
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col l-3">
+                    <h1 class="footer-heading">Menu</h1>
+                    <ul class="footer-list footer-wrap">
+                        <div class="footer-item-wrap">
+                        <li class="footer-item footer-item--active">
+                            <a href="" class="footer-item__link">Trang Chủ</a>
+                        </li>
+                        <li class="footer-item">
+                            <a href="" class="footer-item__link">Cửa Hàng</a>
+                        </li>
+                        <li class="footer-item">
+                            <a href="" class="footer-item__link">Giới Thiệu</a>
+                        </li>
+                </div>
+                <div class="footer-item-wrap">
+                    <li class="footer-item">
+                        <a href="" class="footer-item__link">Liên Hệ</a>
+                    </li>
+                    <li class="footer-item">
+                        <a href="" class="footer-item__link">Tin Tức</a>
+                    </li>
+                </div>
+                </ul>
+            </div>
+            <div class="col l-3">
+                <h1 class="footer-heading">Mạng Xã Hội</h1>
+                <div class="footer-wrap">
+                    <a href="" class="footer-item__icon facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span class="tooltip">Facebook</span>
+                    </a>
+                    <a href="" class="footer-item__icon twitter">
+                        <i class="fab fa-twitter"></i>
+                        <span class="tooltip">Twitter</span>
+                    </a>
+                    <a href="" class="footer-item__icon instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span class="tooltip">Instagram</span>
+                    </a>
+                    <a href="" class="footer-item__icon youtube">
+                        <i class="fab fa-youtube"></i>
+                        <span class="tooltip">Youtube</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="grid wide">
+        <p class="footer__text">© 2022 - Bản quyền thuộc về Công ty Khởi Nghiệp 1 thành Ziên</p>
+    </div>
+    </div>
+</footer>
+    </div>
+    <!-- Modal Layout -->
+    <div class="modal" id="my-modal">
+        <div class="modal__overlay"></div>
+        <a href="#" class="overlay-close"></a>
+
+        <div class="modal__body">
+            <!-- Register Form -->
+            <div class="auth-form form-size__register">
+                <div class="auth-form__header">
+                    <h3 class="auth-form__heading">Đăng Ký</h3>
+                </div>
+                <div class="auth-form__group">
+                    <div class="auth-form__title">Email của bạn</div>
+                    <input type="text" class="auth-form__input">
+                </div>
+                <div class="auth-form__group">
+                    <div class="auth-form__title">Mật khẩu</div>
+                    <input type="password" class="auth-form__input">
+                </div>
+                <div class="auth-form__group">
+                    <div class="auth-form__title">Nhập lại mật khẩu</div>
+                    <input type="password" class="auth-form__input">
+                </div>
+                <div class="auth-form__controls">
+                    <button class="btn btn-register">ĐĂNG KÝ</button>
+                </div>
+                <div class="line">
+                    <p class="line-text">HOẶC</p>
+                </div>
+
+                <div class="auth-form__socials">
+                    <a href="" class="auth-form__socials--facebook btn--width-icon">
+                        <i class="fab fa-facebook-f"></i>
+                        <span class="auth-form__socials-title">Facebook</span>
+                    </a>
+                    <a href="" class="auth-form__socials--google btn--width-icon">
+                        <i class="fab fa-google"></i>
+                        <span class="auth-form__socials-title">Google</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div class="auth-form form-size__login active">
+                <div class="auth-form__header">
+                    <h3 class="auth-form__heading">Đăng Nhập</h3>
+                </div>
+                <div class="auth-form__group">
+                    <div class="auth-form__title">Email</div>
+                    <input type="text" class="auth-form__input">
+                </div>
+                <div class="auth-form__group">
+                    <div class="auth-form__title">Mật khẩu</div>
+                    <input type="text" class="auth-form__input">
+                </div>
+                <div class="auth-form__group">
+                    <input type="checkbox" class="auth-form__checkbox">
+                    <span class="auth-form__checkbox-description">Ghi nhớ mật khẩu</span>
+                    <li class="auth-form__forgot">
+                        <a href="" class="auth-form__forgot-link">Quên mật khẩu ?</a>
+                    </li>
+                </div>
+                <div class="auth-form__controls">
+                    <button class="btn btn-register">ĐĂNG NHẬP</button>
+                </div>
+                <span class="auth-form__wonder">
+                    <p class="auth-form__wonder-text">Bạn chưa có tài khoản?</p>
+                    <a href="" class="auth-form__wonder-login">Đăng Ký</a>
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @RenderSection("upload", required: false)
+    @RenderSection("upload1", required: false)
+    @RenderSection("upload2", required: false)
+    @RenderSection("upload3", required: false)
+    @RenderSection("scripts1", false)
+    @RenderSection("scripts2", false)
+    @RenderSection("scripts3", false)
+    @RenderSection("scripts4", false)
+    @RenderSection("scripts5", false)
+    @RenderSection("scripts6", false)
+    @RenderSection("scripts7", false)
+    @RenderSection("scripts8", false)
+    @*    <script src="~/Content/ckeditor5-build-classic/ckeditor.js"></script>*@
+
+</body>
+</html>
+
+<style>
+    .check-in {
+        color: #fff;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        text-transform: uppercase;
+        line-height: 40px;
+    }
+</style>
