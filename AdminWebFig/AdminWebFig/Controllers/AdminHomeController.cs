@@ -18,7 +18,7 @@ namespace AdminWebFig.Controllers
             var all_figure = from f in data.Products select f;
             return View(all_figure);
         }
-      /*  [Authorize]*/
+        [Authorize]
         public ActionResult Create()
         {
 
@@ -33,7 +33,7 @@ namespace AdminWebFig.Controllers
             ViewBag.size = new SelectList(listsize, "idSize", "tenSize");
             return View();
         }
-       /* [Authorize]*/
+        [Authorize]
         [HttpPost]
         public ActionResult Create(FormCollection collection, Product s)
         {
@@ -98,14 +98,14 @@ namespace AdminWebFig.Controllers
             return "/Content/img/" + file.FileName;
         }
 
-   /*     [Authorize]*/
+        [Authorize]
         public ActionResult Detail(int idProduct)
         {
             var D_fig = data.Products.First(m => m.idProduct == idProduct);
             return View(D_fig);
         }
 
-   /*     [Authorize]*/
+        [Authorize]
         public ActionResult Delete(int idProduct)
         {
             var D_theloai = data.Products.First(m => m.idProduct == idProduct);
@@ -113,7 +113,7 @@ namespace AdminWebFig.Controllers
 
             return View(D_theloai);
         }
-      /*  [Authorize]*/
+        [Authorize]
         [HttpPost]
         public ActionResult Delete(int idProduct, FormCollection collection)
         {
@@ -122,7 +122,7 @@ namespace AdminWebFig.Controllers
             data.SaveChanges();
             return RedirectToAction("Index");
         }
-      /*  [Authorize]*/
+        [Authorize]
         public ActionResult Edit(int idProduct)
         {
             var E_fig = data.Products.First(m => m.idProduct == idProduct);
@@ -138,7 +138,7 @@ namespace AdminWebFig.Controllers
             ViewBag.size = new SelectList(listsize, "idSize", "tenSize");
             return View(E_fig);
         }
-    /*    [Authorize]*/
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(int idProduct, FormCollection collection)
         {
@@ -200,7 +200,7 @@ namespace AdminWebFig.Controllers
         {
             return View();
         }
-       /* [Authorize]*/
+        [Authorize]
         [HttpPost]
         public ActionResult Createdanhmuc(FormCollection collection, Category s)
         {
@@ -225,14 +225,14 @@ namespace AdminWebFig.Controllers
             }
             return this.Createdanhmuc();
         }
-  /*      [Authorize]*/
+        [Authorize]
         public ActionResult Editdanhmuc(int id)
         {
             var E_fig = data.Categorys.First(m => m.idCategory == id);
             return View(E_fig);
         }
 
-  /*      [Authorize]*/
+        [Authorize]
         [HttpPost]
         public ActionResult Editdanhmuc(int id, FormCollection collection)
         {
@@ -259,7 +259,7 @@ namespace AdminWebFig.Controllers
 
 
         }
-  /*      [Authorize]*/
+        [Authorize]
         public ActionResult Deletedanhmuc(int id)
         {
 
@@ -268,7 +268,7 @@ namespace AdminWebFig.Controllers
 
             return View(D_theloai);
         }
-    /*    [Authorize]*/
+        [Authorize]
         [HttpPost]
         public ActionResult Deletedanhmuc(int id, FormCollection collection)
 
@@ -296,12 +296,12 @@ namespace AdminWebFig.Controllers
             var all_NSX = from f in data.NSXes select f;
             return View(all_NSX);
         }
-/*        [Authorize]*/
+        [Authorize]
         public ActionResult CreateNSX()
         {
             return View();
         }
-     /*   [Authorize]*/
+        [Authorize]
         [HttpPost]
         public ActionResult CreateNSX(FormCollection collection, NSX s)
         {
@@ -325,14 +325,14 @@ namespace AdminWebFig.Controllers
             }
             return this.CreateNSX();
         }
- /*       [Authorize]*/
+        [Authorize]
         public ActionResult EditNSX(int id)
         {
             var E_NSX = data.NSXes.First(m => m.idNSX == id);
             return View(E_NSX);
         }
-/*
-        [Authorize]*/
+
+        [Authorize]
         [HttpPost]
         public ActionResult EditNSX(int id, FormCollection a)
         {
@@ -356,7 +356,7 @@ namespace AdminWebFig.Controllers
             }
             return this.EditNSX(id);
         }
-/*        [Authorize]*/
+        [Authorize]
         public ActionResult DeleteNSX(int id)
         {
             var D_NSX = data.NSXes.First(m => m.idNSX == id);
@@ -364,7 +364,7 @@ namespace AdminWebFig.Controllers
 
             return View(D_NSX);
         }
-     /*   [Authorize]*/
+        [Authorize]
         [HttpPost]
         public ActionResult DeleteNSX(int id, FormCollection collection)
         {
@@ -398,7 +398,7 @@ namespace AdminWebFig.Controllers
             return View(D_fig);
         }
 
-/*        [Authorize]*/
+        [Authorize]
         public ActionResult EditGioithieu(int idBaiviet = 1)
         {
             var E_fig = data.Gioithieux.First(m => m.idBaiviet == idBaiviet);
@@ -481,7 +481,7 @@ namespace AdminWebFig.Controllers
             return this.EditGioithieu(idBaiviet);
         }
 
-  /*      [Authorize]*/
+        [Authorize]
         public ActionResult DSDonHang()
         {
             var ds_donhang = data.Orders.ToList();         

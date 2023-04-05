@@ -11,13 +11,103 @@ using System.Web.Hosting;
 using System.Web.Mvc;
 using WebFig.Models;
 using WebFig.Models.Momo;
-
+using Facebook;
 namespace WebFig.Controllers
 {
     public class NguoiDungController : Controller
     {
         // GET: NguoiDung
         UserData data = new UserData();
+
+
+
+        private Uri RediredtUri
+        {
+            get
+            {
+                var uriBuilder = new UriBuilder(Request.Url);
+                uriBuilder.Query = null;
+                uriBuilder.Fragment = null;
+                uriBuilder.Path = Url.Action("FacebookCallback");
+                return uriBuilder.Uri;
+            }
+        }
+        public ActionResult DangNhapFacebook()
+        {
+            var fb = new FacebookClient();
+            var loginUrl = fb.GetLoginUrl(new
+            {
+                client_id = ConfigurationManager.AppSettings["FbAppId"],
+                client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
+                redirect_uri = RediredtUri.AbsoluteUri,
+                response_type = "code",
+                scope = "email",
+            });
+            return Redirect(loginUrl.AbsoluteUri);
+        }
+        public int InsertForFacebook(Account user)
+        {
+            var check = data.Accounts.SingleOrDefault(p => p.username == user.username);
+            if (check == null)
+            {
+                data.Accounts.Add(user);
+                try
+                {
+                    data.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    Console.WriteLine(e);
+                }
+                return user.idAccount;
+            }
+            else
+                return check.idAccount;
+        }
+        public ActionResult FacebookCallback(string code)
+        {
+
+            var fb = new FacebookClient();
+            dynamic result = fb.Post("oauth/access_token", new
+            {
+                client_id = ConfigurationManager.AppSettings["FbAppId"],
+                client_secret = ConfigurationManager.AppSettings["FbAppSecret"],
+                redirect_uri = RediredtUri.AbsoluteUri,
+                code = code
+            });
+
+            var accessToken = result.access_token;
+            string Numrd_str;
+            Random rd = new Random();
+            int Numrd = rd.Next(35450, 1000000);//biến Numrd sẽ nhận có giá trị ngẫu nhiên trong khoảng 1 đến 100
+            Numrd_str = rd.Next(35450, 1000000).ToString();//Chuyển giá trị ramdon về kiểu string
+            if (!string.IsNullOrEmpty(accessToken))
+            {
+                fb.AccessToken = accessToken;
+                dynamic me = fb.Get("me?fields=first_name,middle_name,last_name,id,email");
+                string email = me.email;
+                string firstname = me.first_name;
+                string middlename = me.middle_name;
+                string lastname = me.last_name;
+                var user = new Account();
+                user.username = firstname;
+                user.password = Numrd_str;
+                user.password_verify = Numrd_str;
+                user.Hoten = firstname + " " + middlename + " " + lastname;
+                user.SoDT = "1111111111";
+                user.Diachi = "10Facebook";
+                user.Email = email;
+                user.IsValid1 = true;
+                int check = InsertForFacebook(user);
+                if (check > 0)
+                {
+                    var taikhoan = data.Accounts.Where(p => p.idAccount == check).FirstOrDefault();
+                    Session["TaiKhoan"] = taikhoan;
+                    Session["Fullname"] = taikhoan.Hoten;
+                }
+            }
+            return RedirectToAction("Index", "UserHome");
+        }
         /*
                 public ActionResult DangKy()
                 {
@@ -223,7 +313,7 @@ namespace WebFig.Controllers
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
             client.DeliveryFormat = (SmtpDeliveryFormat)SmtpDeliveryMethod.Network;
-            client.Credentials = new System.Net.NetworkCredential("a.buihong@gmail.com", "BuianhmGG!@#2105");
+            client.Credentials = new System.Net.NetworkCredential("wibustore170@gmail.com", "uzbvagzhsmwzjfbp");
 
             /*"123456Vinh@"*/
             try

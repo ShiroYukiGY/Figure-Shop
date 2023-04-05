@@ -1,4 +1,5 @@
 ﻿using System;
+using PagedList;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,23 +11,29 @@ namespace WebFig.Controllers
     {
         // GET: DonHang
         UserData data = new UserData();
-        public ActionResult DSDonHang()
+        public ActionResult DSDonHang(int ? page)
         {
             if(Session["TaiKhoan"]!= null)
             {
+                if (page == null) page = 1;
+                int pageSize = 6;
+                int pageNum = page ?? 1;
                 Account kh = (Account)Session["TaiKhoan"];
                 var list_donhang = data.Orders.Where(n => n.idAccount == kh.idAccount).ToList();
-                return View(list_donhang);
+                return View(list_donhang.ToPagedList(pageNum,pageSize));
             }
             else
             {
                 return View("DangNhap","NguoiDung");
             }
         }
-        public ActionResult ChiTietDonHang(int id)
+        public ActionResult ChiTietDonHang(int ? page, int id)
         {
-             var chitietdonhang = data.OrderDetails.Where(n=>n.IdOrder == id).ToList();
-            return View(chitietdonhang);
+            if (page == null) page = 1;
+            int pageSize = 6;
+            int pageNum = page ?? 1;
+            var chitietdonhang = data.OrderDetails.Where(n=>n.IdOrder == id).ToList();
+            return View(chitietdonhang.ToPagedList(pageNum,pageSize));
         }
     }
 }

@@ -143,8 +143,9 @@ namespace WebFig.Controllers
                     }
                 }
                 return tt;
-            }
+            }        
         }
+
 
         public ActionResult GioHang(string thongbao)
         {
@@ -155,23 +156,19 @@ namespace WebFig.Controllers
                 return RedirectToAction("DangNhap", "NguoiDung");
             }
             else
-            {
+            {     
+                    var lstCart = data.Carts.Where(n => n.idAccount == account.idAccount).ToList();
 
-                var lstCart = data.Carts.Where(n => n.idAccount == account.idAccount).ToList();
-                //Cart sanpham = lstCart.SingleOrDefault(n => n.idProduct == id);
-                //var sl = data.Products.Where(n => n.idProduct == id).First();
-                foreach (var item in lstCart)
-                {
-                    Cart cart = data.Carts.Where(n => n.idCart == item.idCart).First();
-                    ////Giohang sanpham = lstGiohang.Find(n => n.id == item.idProduct);
-                    //sanpham = new Cart((int)item.idProduct);
-                    lstGiohang.Add(cart);
-                    
-                }
-                ViewBag.Tongsoluong = TongSoLuong();
-                ViewBag.Tongtien = TongTien();
-                ViewBag.Tongsoluongsanpham = TongSoLuongSanPham();
-                ViewBag.SoLuongTon = slton;
+                    foreach (var i in lstCart)
+                    {
+                        Cart cart = data.Carts.Where(n => n.idCart == i.idCart).First();
+                        lstGiohang.Add(cart);
+
+                    }
+                    ViewBag.Tongsoluong = TongSoLuong();
+                    ViewBag.Tongtien = TongTien();
+                    ViewBag.Tongsoluongsanpham = TongSoLuongSanPham();
+                    ViewBag.SoLuongTon = slton;                   
 
             }
             Session["GiohangAccount"] = lstGiohang;
@@ -234,7 +231,7 @@ namespace WebFig.Controllers
             return RedirectToAction("GioHang");
 
         }
-
+        int i = 0;
         [HttpGet]
         public ActionResult DatHang()
         {
@@ -242,6 +239,14 @@ namespace WebFig.Controllers
             List<Cart> dsGiohang = data.Carts.Where(n => n.idAccount == kh.idAccount).ToList();
 
             Session["Giohang"] = dsGiohang;
+
+
+            // Lấy thông tin tài khoản
+            var TTTaiKhoan = data.Accounts.Where(n => n.idAccount == kh.idAccount).First();          
+            ViewBag.DiaChi = TTTaiKhoan.Diachi;
+            ViewBag.SoDT = TTTaiKhoan.SoDT;
+            ViewBag.HoTen = TTTaiKhoan.Hoten;
+            ViewBag.Email = TTTaiKhoan.Email;
 
             var listdelivery = data.Deliveries.ToList();
             ViewBag.Deliveries = new SelectList(listdelivery, "idDelivery", "tenDelivery");
@@ -263,17 +268,20 @@ namespace WebFig.Controllers
             ViewBag.Tongsoluongsanpham = TongSoLuongSanPham();
             return View(lstGiohang);
         }
-        int i;
         public ActionResult DatHang(FormCollection collection)
         {
            
             var E_payment = collection["idPayment"];
             var E_Deli = collection["idDelivery"];
-            i = int.Parse(E_Deli);
+            Session["id_deli"] = int.Parse(E_Deli);
             if (int.Parse(E_payment) == 2)
-            {   
+            {
                 int i = int.Parse(E_Deli);
-                return RedirectToAction("Payment", "Giohang", new {@id = int.Parse(E_Deli)});
+                return RedirectToAction("Payment", "Giohang", new { @id = int.Parse(E_Deli) });
+            }
+            else if (int.Parse(E_payment) == 3)
+            {
+                return RedirectToAction("PaymentWithPaypal", "Paypal");
             }
             LuuDonHang(collection);
             return RedirectToAction("XacnhanDonhang", "Giohang");
@@ -282,22 +290,9 @@ namespace WebFig.Controllers
         {
             return View();
         }
-        public ActionResult Payment( FormCollection collection, int id)
+        public ActionResult Payment()
         {
             //request params need to request to MoMo system
-
-            //string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
-            //string partnerCode = "MOMOOKYG20220406";
-            //string accessKey = "PIARbaEf2koobiAd";
-            //string serectkey = "kGNK3Eo7sqrRZzXKfrBSpDD3rvwcYd6t";
-            //string orderInfo = "test";
-            //string returnUrl = "https://localhost:44397/GioHang/XacnhanDonhang";
-            //string notifyurl = "http://ba1adf48beba.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
-
-            //string amount = "1000"/*TongTien().ToString()*/;
-            //string orderid = DateTime.Now.Ticks.ToString();
-            //string requestId = DateTime.Now.Ticks.ToString();
-            //string extraData = "";
 
             string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
             string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
@@ -346,8 +341,7 @@ namespace WebFig.Controllers
             };
 
             string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());         
-            JObject jmessage = JObject.Parse(responseFromMomo);
-            LuuDonHangMoMo(collection, id);
+            JObject jmessage = JObject.Parse(responseFromMomo);         
             return Redirect(jmessage.GetValue("payUrl").ToString());
 
         }
@@ -362,17 +356,17 @@ namespace WebFig.Controllers
             string signature = crypto.signSHA256(param, serectKey);
             if (signature != Request["signature"].ToString())
             {
-                ViewBag.message = "Thong tin request khong hop le";
+                ViewBag.message = "Thông tin request không hợp lệ";
                 return View();
             }
             if (!Request.QueryString["errorCode"].Equals("0"))
             {
-                ViewBag.message = "Thanh toan that bai";
+                ViewBag.message = "Thanh toán thất bại";
             }
             else
             {
-                ViewBag.message = "Thanh toan thanh cong";
-                Session["Giohang"] = new List<Cart>();
+                ViewBag.message = "Thanh toán thành công";
+                LuuDonHangMoMo();
             }
             return View();
         }
@@ -401,7 +395,7 @@ namespace WebFig.Controllers
             string status_code = Request["status_code"].ToString();
             if (status_code != "0")
             {
-                ViewBag.message = "Thanh toan that bai";
+                ViewBag.message = "Thanh toán thất bại";
             }else 
             {
                 
@@ -416,15 +410,13 @@ namespace WebFig.Controllers
             Account kh = (Account)Session["TaiKhoan"];
             Product product = new Product();
             List<Cart> gh = Laygiohang();
-            var ngaygiao = String.Format("{0:MM/dd/yyy}", collection["NgayGiao"]);
-
-
+  
             var E_payment = collection["idPayment"];
             var E_Deli = collection["idDelivery"];
 
             order.idAccount = kh.idAccount;
             order.idPayment = int.Parse(E_payment);
-            order.idDelivery = int.Parse(E_Deli);
+            order.idDelivery = (int)Session["id_deli"];
             order.NgayDat = DateTime.Now;
             order.IdStatus = 0;
             data.Orders.Add(order);
@@ -456,19 +448,16 @@ namespace WebFig.Controllers
             Session["Giohang"] = null;  
         }
 
-        public void LuuDonHangMoMo(FormCollection collection, int id)
+        public void LuuDonHangMoMo()
         {
             Order order = new Order();
             Account kh = (Account)Session["TaiKhoan"];
             Product product = new Product();
             List<Cart> gh = Laygiohang();
-            var ngaygiao = String.Format("{0:MM/dd/yyy}", collection["NgayGiao"]);
-
-            //var E_Deli = collection["idDelivery"];
 
             order.idAccount = kh.idAccount;
             order.idPayment = 2;
-            order.idDelivery = id;
+            order.idDelivery = (int)Session["id_deli"];
             order.NgayDat = DateTime.Now;
             order.IdStatus = 0;
             data.Orders.Add(order);
@@ -504,17 +493,18 @@ namespace WebFig.Controllers
         {       
             Account kh = (Account)Session["TaiKhoan"];
             var order = data.Orders.Where(n=>n.idAccount == kh.idAccount).First();
+            var TTTaiKhoan = data.Accounts.Where(n => n.idAccount == kh.idAccount).First();
             string content = System.IO.File.ReadAllText(Server.MapPath("~/assets/client/template/neworder.html"));
             content = content.Replace("{{CustomerName}}", kh.Hoten);
-            content = content.Replace("{{Phone}}", kh.SoDT);
-            content = content.Replace("{{Email}}", kh.Email);
-            content = content.Replace("{{Address}}", kh.Diachi);
+            content = content.Replace("{{Phone}}", TTTaiKhoan.SoDT);
+            content = content.Replace("{{Email}}", TTTaiKhoan.Email);
+            content = content.Replace("{{Address}}", TTTaiKhoan.Diachi);
             content = content.Replace("{{Total}}", TongTien().ToString("N0"));
             content = content.Replace("{{DateBuy}}", order.NgayDat.ToString());
 
             var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
 
-            new MailHelper().SendMail(kh.Email, "Đơn hàng mới từ Figure Shop", content);
+            new MailHelper().SendMail(TTTaiKhoan.Email, "Đơn hàng mới từ Figure Shop", content); ;
             new MailHelper().SendMail(toEmail, "Đơn hàng mới từ Figure Shop", content);       
         }
     }       

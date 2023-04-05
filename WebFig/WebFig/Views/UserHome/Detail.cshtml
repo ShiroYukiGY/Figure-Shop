@@ -9,7 +9,7 @@
 <div class="detail">
     <div class="container">
         <div class="row">
-            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
+            <div class="col-lg-4 col-md-5 col-sm-5 col-6">
 
                 <div class="row img-wrap">
                     <div class="col-lg-3 sub-img">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-7 col-md-7 col-sm-7 col-6">
+            <div class="col-lg-8 col-md-7 col-sm-7 col-6">
                 <div class="product-description">
                     <nav aria-label="breadcrumb">
                         <div class="breadcrumb">
@@ -34,7 +34,7 @@
                     <div class="product-name">@Html.DisplayFor(p => p.ten)</div>
                     <div class="product-price"> @String.Format("{0:0,0}", Model.gia)<span> VND</span></div>
                     <div class="product-extant">Còn lại: @Html.DisplayFor(p => p.soluongton)</div>
-                    @if (@ViewBag.SoLgTon == 0)
+                    @if (@ViewBag.SoLgTon <= 0)
                     {
                         <br />
                         <h1 style="color:red">Hết hàng</h1>
@@ -79,12 +79,6 @@
 </div>
 
     </div>
-
-<p>
-    @*  @Html.ActionLink("Edit", "Edit", new { id = Model.idProduct }) |*@
-    @Html.ActionLink("Back to List", "Index")
-</p>
-
 <script>
 
     function myFunction(smallImg) {
@@ -93,3 +87,24 @@
     }
 
 </script>
+
+<style>
+    .img-wrap {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .main-img-item {
+        width: 126%;
+    }
+    .sub-img {
+        flex-direction: row;
+        margin-left: -15px;
+    }
+    .sub-img-item {
+        width: 145%;
+        padding: 5px;
+    }
+    .btn-add {
+        line-height: 32px;
+    }
+</style>

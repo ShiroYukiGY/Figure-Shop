@@ -20,27 +20,28 @@
         public int idAccount { get; set; }
 
         [StringLength(100)]
-        [Required(ErrorMessage = "Không được bỏ trống")]
+        [Required(ErrorMessage = "Không đượcc bỏ trống")]
         [Display(Name = "Tên tài khoản")]
         public string username { get; set; }
 
-        [Required(ErrorMessage = "Không được bỏ trống")]
-        /*[StringLength(100, ErrorMessage = " {0} tối thiểu {2} kí tự.", MinimumLength = 6)]*/
+        [Required(ErrorMessage = "Không đượcc bỏ trống")]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]
         public string password { get; set; }
 
         [NotMapped]
-        /*[Required(ErrorMessage = "Không được bỏ trống")]*/
+        [Required(ErrorMessage = "Không đượcc bỏ trống")]
+
         [Display(Name = "Nhập lại mật khẩu")]
         [DataType(DataType.Password)]
+
         [Compare("password", ErrorMessage = "Mật khẩu không trùng khớp")]
 
         public string password_verify { get; set; }
 
 
         [StringLength(100)]
-        [Required(ErrorMessage = "Không được bỏ trống")]
+        [Required(ErrorMessage = "Không đượcc bỏ trống")]
         [Display(Name = "Họ tên")]
         public string Hoten { get; set; }
 
@@ -66,7 +67,6 @@
         public string Email { get; set; }
 
         public bool IsValid1 { get; set; }
-
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }

@@ -35,6 +35,11 @@
     justify-content: center;
 }
 
+.header__navbar-login-link {
+    color: white;
+    text-decoration: none;
+}
+
 .header__navbar-login {
     font-size: 1.4rem;
     font-weight: 500;

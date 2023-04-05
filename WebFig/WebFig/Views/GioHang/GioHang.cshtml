@@ -48,81 +48,293 @@
         </div>
     </div>
 </div>
-@if (Session["GiohangAccount"] != null)
-{
-    <div class="container ">
-        <h2>Giỏ Hàng</h2>
+<div class="cart">
+    <div class="container">
 
-        <table class="table">
-            <tr>
-                <th>
-                    Tên
-                </th>
-                <th>
-                    Hình
-                </th>
-                <th>
-                    Giá
-                </th>
-                <th>
-                    Số lượng
-                </th>
-                <th>
-                    Thành tiền
-                </th>
-                <th></th>
+        @if (Session["GiohangAccount"] != null)
+        {
+            <div class="container ">
+
+
+                <table class="table">
+                    <tr>
+                        <div class="row cart-heading">
+                        <th>
+                            <div class="col-lg-3 cart-heading-name"> Tên</div>
+                        </th>
+                        <th>
+                            <div class="col-lg-3 cart-heading-name">Hình</div>
+                        </th>
+                        <th>
+                            <div class="col-lg-3 cart-heading-name">Giá</div>
+                        </th>
+                        <th>
+                            <div class="col-lg-3 cart-heading-name">Số lượng</div>
+                        </th>
+                        @*<th>
+                                                        <div class="col-lg-3 cart-heading-name"> Thành tiền</div>
+                            </th>*@
+                        <th></th>
+            </div>
             </tr>
 
 
             @foreach (var item in Model)
             {
                 <tr>
-
+                    <div class="cart-header">
+                        <h1 class="cart-title">Giỏ Hàng Của Bạn</h1>
+                        <h4 class="cart-description">( Hiện đang có <span>@ViewBag.Tongsoluong</span> sản phẩm )</h4>
+                    </div>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Product.ten)
+                        <div class="cart-name" title="@item.Product.ten">@item.Product.ten</div>
                     </td>
-                    <td><img src="@item.Product.hinh" width="180" alt="Alternate Text" /></td>
+                    <td><img src="@item.Product.hinh" width="120" alt="" class="cart-img"></td>
                     @using (Html.BeginForm("Capnhatgiohang", "GioHang", new { @id = item.idProduct }))
                     {
-                        <td>@String.Format("{0:0,0}", item.gia) VND</td>
-                        <td><input type="number" min="1" max="@(item.Product.soluongton)" name="txtSoLg" value="@item.soluong" /></td>
+                        <div class="col-lg-3">
+                            @*  <td>@String.Format("{0:0,0}", item.gia) VND</td>*@
+                        <td><div class="cart-price">@String.Format("{0:0,0}", item.gia) VND</div></td>
+                        <td><input type="number" min="1" max="@(item.Product.soluongton)" name="txtSoLg" value="@item.soluong" class="cart-price" /></td>
 
 
 
-                        <td>@(item.soluong * item.gia)</td>
-                        <td><a href="@Url.Action("Detail", "UserHome", new { @id = item.idProduct })">Chi tiết</a> | @Html.ActionLink("Xóa", "XoaGiohang", new { @id = item.idProduct })</td>
-                        <td><input type="submit" value="Cập nhật" class="btn btn-success" id="num" /></td>
+                        @*  <td>@(item.soluong * item.gia)</td>*@
+                        @*  <td><div class="cart-price">@(item.soluong * item.gia)</div></td>*@
+                </div>
 
-                    }
-                </tr>
+                <td><button class="btn-delete"> <a href="@Url.Action("Detail", "UserHome", new { @id = item.idProduct })">Chi tiết</a> </button>| <button class="btn-delete"><a>@Html.ActionLink("Xoá", "XoaGiohang", new { @id = item.idProduct, @class = "btn-delete" })</a></button></td>
+                <td><input type="submit" value="Cập nhật" class="btn-delete" id="num" /></td>
+
             }
+                    </tr>
+                }
 
             <tr style="font-weight:bold; text-align:left; color:red">
-                <td colspan="2">Số loại sản phẩm: @ViewBag.Tongsoluongsanpham</td>
-                <td colspan="2">Số lượng sản phẩm: @ViewBag.Tongsoluong</td>
-                <td colspan="4">Tổng tiền: @String.Format("{0:0,0}", ViewBag.Tongtien) VND</td>
+                <td colspan="2"> <div class="cart-title-total">Số loại sản phẩm: <span>@ViewBag.Tongsoluongsanpham</span></div></td>
+                @* <td colspan="2" class="cart-title-total">Số lượng sản phẩm: @ViewBag.Tongsoluong</td>*@
+                <td><div class="cart-title-total">Số lượng: <span>@ViewBag.Tongsoluong</span></div></td>
+                @* <td colspan="4" class="cart-title-total">Tổng tiền: @String.Format("{0:0,0}", ViewBag.Tongtien) VND</td>*@
+                <td><div class="cart-title-total">Tổng tiền: <span>@String.Format("{0:0,0}", ViewBag.Tongtien) VND</span></div> </td>
             </tr>
 
             <tr style="font-weight:bold; color:white; text-align:right;">
                 <td colspan="6">
-                    <button class="btn btn-success">@Html.ActionLink("Xóa giỏ hàng", "XoaTatCaGioHang", new { @style = "text-decoration:none; color:white" })</button>
+
+                    <button class="btn-delete btn-xoa">@Html.ActionLink("Xóa giỏ hàng", "XoaTatCaGioHang", new { @style = "text-decoration:none; color:white" })</button>
+
+
                 </td>
             </tr>
             <tr style="font-weight:bold; color:white; text-align:right">
             <tr style="font-weight:bold; color:white; text-align:right">
                 <td colspan="6">
-                    <button class="btn btn-success">@Html.ActionLink("Đặt hàng", "DatHang", "GioHang", new { @style = "text-decoration:none; color:white" })</button>
+                    <div class="cart-btn"><button class="btn-delete">@Html.ActionLink("Đặt hàng", "DatHang", "GioHang", new { @style = "cart-payment" })</button></div>
+
                 </td>
             </tr>
 
-        </table>
-    </div>
-}
-else
-{
-    <div class="container">
-        <h1>
-            @ViewBag.ThongBao1
-        </h1>
-    </div>
-}
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            <h1>
+                @ViewBag.ThongBao1
+            </h1>
+        </div>
+    }
+        </div>
+
+        </div>
+        <style>
+            .cart {
+                margin-top: calc(var(--header-height) + var(--header-sub) + 32px);
+                margin-bottom: 180px;
+            }
+
+            .cart-header {
+                text-align: center;
+            }
+
+            .cart-title {
+                font-size: 3.2rem;
+                font-weight: 600;
+                color: #000;
+            }
+
+            .cart-description,
+            .cart-description span {
+                font-size: 1.6rem;
+                font-weight: 300;
+                margin-top: 12px;
+            }
+
+                .cart-description span {
+                    color: rgba(13, 146, 39, 0.849);
+                }
+
+            .cart-body {
+                margin-top: 32px;
+            }
+
+            .cart-heading-name {
+                padding: 10px 0;
+                font-size: 1.6rem;
+                color: #000;
+                font-weight: 600;
+                text-align: center;
+            }
+
+            .cart-item {
+                border-top: 1px solid var(--border-color);
+            }
+
+                .cart-item .col-lg-3 {
+                    text-align: center;
+                    padding: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+            .cart-product {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .cart-name {
+                color: #000;
+                font-size: 2rem;
+                font-weight: 600;
+                /* Tối đa chỉ có 1 dòng duy nhất */
+                text-align: center;
+                line-height: 2.8rem;
+                overflow: hidden;
+                max-height: 2.8rem;
+                /* Ẩn bớt nội dung và thể hiện = dấu 3 chấm */
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+            }
+
+            .btn-wrap {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn-delete:hover {
+                color: #fff;
+                background-color: var(--light-red-color);
+                border: 1px solid var(--light-red-color);
+            }
+
+            .btn-delete {
+                width: 96px;
+                height: 30px;
+                color: #000;
+                background-color: #fff;
+                border: 1px solid #000;
+                text-align: center;
+                margin: 15px 8px;
+                font-size: 1.4rem;
+                transition: 0.2s;
+                line-height: 28px;
+                cursor: pointer;
+            }
+
+            .btn-xoa {
+                width: 150px;
+                color: white;
+                background-color: black;
+            }
+
+            .cart-price {
+                font-weight: 400;
+                font-size: 1.6rem;
+                margin-top: 26px;
+            }
+
+            .cart-delete:hover {
+                color: var(--light-red-color);
+            }
+
+            .cart-delete {
+                font-size: 2.4rem;
+                position: relative;
+                left: -60px;
+                cursor: pointer;
+                color: rgb(73, 73, 73);
+            }
+
+            .cart-quantity {
+                font-weight: 400;
+                font-size: 1.6rem;
+                border: none;
+                border: 1px solid #000;
+                margin-top: 26px;
+                text-align: center;
+                outline: none;
+            }
+
+            .cart-footer {
+                margin-right: 105px;
+            }
+
+            .cart-total {
+                display: flex;
+                justify-content: flex-end;
+                padding: 24px 0;
+            }
+
+            .cart-title-total:first-child {
+                margin-right: 32px;
+            }
+
+            .cart-title-total {
+                color: #000;
+                font-weight: 400;
+                font-size: 1.8rem;
+            }
+
+                .cart-title-total span {
+                    font-weight: 600;
+                    font-size: 1.8rem;
+                }
+
+            .cart-btn {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .cart-next,
+            .cart-payment {
+                cursor: pointer;
+                padding: 8px;
+                font-weight: 600;
+                font-size: 1.6rem;
+                text-transform: uppercase;
+            }
+
+            .cart-next {
+                margin-right: 12px;
+            }
+
+            .cart-payment:hover {
+                opacity: 0.9;
+            }
+
+            .cart-payment {
+                color: #fff;
+                background-color: #000;
+                transition: 0.3s;
+            }
+
+            .cart-price-mobile {
+                font-size: 1.4rem;
+                font-weight: 400;
+                display: none;
+            }
+        </style>

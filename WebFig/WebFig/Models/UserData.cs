@@ -26,6 +26,7 @@ namespace WebFig.Models
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Coupoun> Coupouns { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -44,10 +45,6 @@ namespace WebFig.Models
             modelBuilder.Entity<Category>()
                 .Property(e => e.hinhCategory)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<Delivery>()
-                .Property(e => e.GiaDelivery)
-                .HasPrecision(18, 0);
 
             modelBuilder.Entity<NSX>()
                 .Property(e => e.hinhNSX)
@@ -86,6 +83,18 @@ namespace WebFig.Models
                 .HasMany(e => e.OrderDetails)
                 .WithRequired(e => e.Product)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Coupoun>()
+                .Property(e => e.codename)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Coupoun>()
+                .Property(e => e.quantity)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Coupoun>()
+                .Property(e => e.price)
+                .HasPrecision(18, 0);
         }
     }
 }

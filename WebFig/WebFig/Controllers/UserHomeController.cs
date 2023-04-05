@@ -20,21 +20,21 @@ namespace WebFig.Controllers
         public ActionResult Index(string SearchString, int idCategory = 0, int idNSX = 0)
         {
             ViewBag.Find = SearchString;
-            var all_sach = (from ele in data.Products select ele).OrderBy(p => p.idProduct);
+            var all_product = (from ele in data.Products select ele).OrderBy(p => p.idProduct);
             if (!String.IsNullOrEmpty(SearchString))
             {
-                all_sach = (IOrderedQueryable<Product>)all_sach.Where(a => a.ten.Contains(SearchString));
-                return View(all_sach.ToList());
+                all_product = (IOrderedQueryable<Product>)all_product.Where(a => a.ten.Contains(SearchString));
+                return View(all_product.ToList());
             }
             else if (idCategory == 0 && idNSX == 0)
             {
-                var sanPhams = data.Products.ToList();
-                return View(sanPhams.ToList());
+                var products = data.Products.ToList();
+                return View(products.ToList());
             }
             else if (idCategory != 0)
             {
-                var sanPhams = data.Products.Where(x => x.idCategory == idCategory);
-                return View(sanPhams.ToList());
+                var products = data.Products.Where(x => x.idCategory == idCategory);
+                return View(products.ToList());
 
             }
             else if (idNSX != 0)
@@ -54,7 +54,38 @@ namespace WebFig.Controllers
             return View(D_fig);
         }
 
- 
+        public ActionResult AccountDetail(int idAccount)
+        {
+            var D_fig = data.Accounts.Where(m => m.idAccount == idAccount).First();
+            return View(D_fig);
+        }
+
+
+        [HttpPost]
+        public ActionResult AccountDetail(int idAccount, Account account)
+        {
+
+            var check = data.Accounts.Where(n => n.idAccount == idAccount).FirstOrDefault();
+            if (check != null)
+            {
+                check.username = check.username;
+                check.password = check.password;
+                check.password_verify = check.password;
+                check.Email = account.Email;
+                check.IsValid1 = check.IsValid1;
+                check.Hoten = check.Hoten;
+                check.Diachi = account.Diachi;
+                check.SoDT = account.SoDT;
+                data.SaveChanges();
+                return RedirectToAction("DatHang", "Giohang");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+
 
         //Khi thanh toán xong ở cổng thanh toán Momo, Momo sẽ trả về một số thông tin, trong đó có errorCode để check thông tin thanh toán
         //errorCode = 0 : thanh toán thành công (Request.QueryString["errorCode"])
